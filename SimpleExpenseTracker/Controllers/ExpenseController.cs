@@ -15,6 +15,8 @@ namespace SimpleExpenseTracker.Controllers
         public IActionResult IndexExpense() // For the MasterList
         {
             var allExpenses = _context.tblExpense.ToList();
+
+            
             return View(allExpenses);
         }
         
@@ -25,15 +27,16 @@ namespace SimpleExpenseTracker.Controllers
             var expenseInDb = _context.tblExpense.SingleOrDefault(expense => expense.Id == id);
                 return View(expenseInDb);
             }
-            else
-            {
+          
+            
             return View();
-            }
+            
         }
         public IActionResult DeleteExpense(int id) // For Deleting Expense Data
-        {   
+        {
             var expenseInDb = _context.tblExpense.SingleOrDefault(expense => expense.Id == id);
             _context.tblExpense.Remove(expenseInDb);
+            _context.SaveChanges();
             return RedirectToAction("IndexExpense");
         }
         
@@ -42,14 +45,12 @@ namespace SimpleExpenseTracker.Controllers
             if (model.Id == 0)
             {
                 _context.tblExpense.Add(model);
-                _context.SaveChanges();
             }
             else
             {
                 _context.tblExpense.Update(model);
-                _context.SaveChanges();
-
             }
+                _context.SaveChanges();
             return RedirectToAction("IndexExpense");
         }
     }
