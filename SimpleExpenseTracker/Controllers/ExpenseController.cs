@@ -16,7 +16,9 @@ namespace SimpleExpenseTracker.Controllers
         {
             var allExpenses = _context.tblExpense.ToList();
 
-            
+            var totalExpense = allExpenses.Sum(x => x.Value);
+            ViewBag.Expenses = totalExpense;
+
             return View(allExpenses);
         }
         
