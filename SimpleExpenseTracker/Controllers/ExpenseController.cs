@@ -18,15 +18,38 @@ namespace SimpleExpenseTracker.Controllers
             return View(allExpenses);
         }
         
-        public IActionResult CreateEditExpense() // For Creating or Editing Expense Data
+        public IActionResult CreateEditExpense(int? id) // For Creating or Editing Expense Data
         {
+            if (id != null)
+            {
+            var expenseInDb = _context.tblExpense.SingleOrDefault(expense => expense.Id == id);
+                return View(expenseInDb);
+            }
+            else
+            {
             return View();
+            }
+        }
+        public IActionResult DeleteExpense(int id) // For Deleting Expense Data
+        {   
+            var expenseInDb = _context.tblExpense.SingleOrDefault(expense => expense.Id == id);
+            _context.tblExpense.Remove(expenseInDb);
+            return RedirectToAction("IndexExpense");
         }
         
         public IActionResult CreateEditExpenseForm(ExpenseModel model) // For Handling the create edit form
         {
-            _context.tblExpense.Add(model);
-            _context.SaveChanges();
+            if (model.Id == 0)
+            {
+                _context.tblExpense.Add(model);
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.tblExpense.Update(model);
+                _context.SaveChanges();
+
+            }
             return RedirectToAction("IndexExpense");
         }
     }

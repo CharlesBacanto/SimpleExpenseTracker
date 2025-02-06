@@ -12,6 +12,7 @@
                 <th>Id</th>
                 <th>PHP</th>
                 <th>Description</th>
+                <th>Edit/Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,10 @@
                     </td>
                     <td>
                        @expense.Description
+                    </td>
+                    <td>
+                        <a asp-action="CreateEditExpense" asp-rout-id="@expense.Id">Edit</a>
+                        <a asp-action="DeleteExpense" asp-rout-id="@expense.Id">Delete</a>
                     </td>
                     </tr>
                 }
