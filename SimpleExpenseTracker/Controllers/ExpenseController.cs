@@ -18,6 +18,7 @@ namespace SimpleExpenseTracker.Controllers
 
             var totalExpense = allExpenses.Sum(x => x.Value);
             ViewBag.Expenses = totalExpense;
+        
 
             return View(allExpenses);
         }
@@ -44,16 +45,24 @@ namespace SimpleExpenseTracker.Controllers
         
         public IActionResult CreateEditExpenseForm(ExpenseModel model) // For Handling the create edit form
         {
-            if (model.Id == 0)
+            try
             {
-                _context.tblExpense.Add(model);
-            }
-            else
-            {
-                _context.tblExpense.Update(model);
-            }
+                if (model.Id == 0)
+                {
+                    _context.tblExpense.Add(model);
+                }
+                else
+                {
+                    _context.tblExpense.Update(model);
+                }
                 _context.SaveChanges();
-            return RedirectToAction("IndexExpense");
+
+            }
+            catch (Exception ex)
+            {
+               
+            }
+              return RedirectToAction("IndexExpense");
         }
     }
 }
