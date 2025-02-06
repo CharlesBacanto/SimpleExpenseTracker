@@ -1,10 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SimpleExpenseTracker.Data;
 using SimpleExpenseTracker.Models;
 
 namespace SimpleExpenseTracker.Controllers
 {
     public class ExpenseController : Controller
     {
+        private readonly SimpleExpenseTrackerDbContext _context;
+
+        public ExpenseController(SimpleExpenseTrackerDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult IndexExpense() // For the MasterList
         {
             return View();

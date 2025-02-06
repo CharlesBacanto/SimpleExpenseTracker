@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SimpleExpenseTracker.Data;
+
 namespace SimpleExpenseTracker
 {
     public class Program
@@ -8,6 +11,7 @@ namespace SimpleExpenseTracker
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<SimpleExpenseTrackerDbContext>(options => options.UseInMemoryDatabase("SimpleExpenseTrackerDb"));
 
             var app = builder.Build();
 
