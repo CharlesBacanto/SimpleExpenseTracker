@@ -14,7 +14,8 @@ namespace SimpleExpenseTracker.Controllers
         }
         public IActionResult IndexExpense() // For the MasterList
         {
-            return View();
+            var allExpenses = _context.tblExpense.ToList();
+            return View(allExpenses);
         }
         
         public IActionResult CreateEditExpense() // For Creating or Editing Expense Data
@@ -24,6 +25,8 @@ namespace SimpleExpenseTracker.Controllers
         
         public IActionResult CreateEditExpenseForm(ExpenseModel model) // For Handling the create edit form
         {
+            _context.tblExpense.Add(model);
+            _context.SaveChanges();
             return RedirectToAction("IndexExpense");
         }
     }
